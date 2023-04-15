@@ -1,0 +1,38 @@
+*{
+    margin: 0%;
+    padding: 0%;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+#section_up {
+    display: flex;
+    margin: 3% 10%;
+}
+
+#text_content{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 3%;
+}
+
+#carousel {
+display: flex;
+margin: 3% 10%;
+background-color: bisque
+}
+
+.item-content{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.img-car{
+    width: 20%;
+}
+
+
+
