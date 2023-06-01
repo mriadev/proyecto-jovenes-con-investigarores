@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Premio;
 use Illuminate\Http\Request;
 
+
+
 class PremioController extends Controller
 {
     public function obtenerPremiosAjax()
@@ -36,45 +38,70 @@ class PremioController extends Controller
         return view('admin.crear-premio');
     }
 
+    public function crearPremioPost(Request $request)
+    {
+        $imagen = $request->file('imagen');
+        //cambiar nombre de la imagen al titulo del premio mas la fecha y la extension
+        $nombreImagen = $request->input('titulo') . date("YmdHis") . "." . $imagen->extension();
+        $imagen->move(public_path('img/premios'), $nombreImagen);
+
+
+       $premio = Premio::create([
+            'titulo' => $request->input('titulo'),
+            'fecha' => $request->input('fecha'), // '2021-05-05
+            'url' => $request->input('url'),
+            'descripcion' => $request->input('descripcion'),
+            'imagen' => $nombreImagen,
+            'destacado' => false,
+            'activo' => true,
+
+        ]);
+
+        $premio->save();
+
+
+        return redirect()->route('gestion-premios')->with('success', 'El premio se ha creado correctamente.');
+    }
+
     public function eliminarPremio(Request $request)
     {
         $premio = Premio::find($request->id);
+        //borrar imagen de la carpeta img/premios
+        unlink(public_path('img/premios/' . $premio->imagen));
         //poner activo a false
         $premio->delete();
         return redirect()->route('gestion-premios')->with('success', 'El premio se ha eliminado correctamente.');
     }
 
-    // public function actualizarPremio(Request $request)
-    // {
-    //     $premio = Premio::find($request->id);
+    public function editarPremio(Request $request)
+    {
+        $premio = Premio::find($request->id);
+        return view('admin.editar-premio', compact('premio'));
+    }
 
-    //     $nombre = $request->input('nombre');
-    //     $url = $request->input('url');
+    public function editarPremioPost(Request $request)
+    {
+        //si se ha subido una imagen
+        if ($request->hasFile('imagen')) {
+            $imagen = $request->file('imagen');
+            //cambiar nombre de la imagen al id del premio mas la extensión
+            $nombreImagen = $request->file('name') . date("YmdHis") . "." . $imagen->extension();
+            $imagen->move(public_path('img/premios'), $nombreImagen);
+            //borrar imagen de la carpeta img/premios
+            unlink(public_path('img/premios/' . $request->input('imagen-guardada')));
+        } else {
+            $nombreImagen = $request->input('imagen-guardada');
+        }
 
-    //     // Verificar si la URL es válida
-    //     $url_pattern = '/^(https?\:\/\/)?(www\.)?(youtube\.com|youtu\.?be)\/.+/';
-    //     if (!preg_match($url_pattern, $url)) {
-    //         return redirect()->back()->with('error', 'La URL del Premio es inválida.');
-    //     }
-
-    //     // Actualizar los datos del Premio
-    //     $premio->nombre = $nombre;
-    //     $premio->url = $url;
-    //     $premio->save();
-
-    //     return redirect()->route('gestion-premios')->with('success', 'El premio se ha actualizado correctamente.');
-    // }
-
-
-    // public function editarPremios($id)
-    // {
-    //     //Busca el Premio con el id que se le pasa por parámetro
-    //     $Premio = Premio::find($id);
-
-    //     //Pasa el Premio a la vista
-    //     return view('admin/editar-premios')->with('premios', $premio);
-    // }
-
+        $premio = Premio::find($request->id);
+        $premio->titulo = $request->input('titulo');
+        $premio->fecha = $request->input('fecha');
+        $premio->url = $request->input('url');
+        $premio->descripcion = $request->input('descripcion');
+        $premio->imagen = $nombreImagen;
+        $premio->save();
+        return redirect()->route('gestion-premios')->with('success', 'El premio se ha editado correctamente.');
+    }
 
     public function gestionPremios()
     {

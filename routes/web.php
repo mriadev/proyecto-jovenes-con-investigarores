@@ -57,8 +57,8 @@ Route::post("/gestion-premios/crear", [PremioController::class, "crearPremioPost
 Route::get("/gestion-premios/destacar/{id}", [PremioController::class, "destacarPremio"])->name("destacar-premio");
 Route::get("/gestion-premios/quitar-destacado/{id}", [PremioController::class, "quitarPremioDestacado"])->name("quitar-premio-destacado");
 Route::get("/gestion-premios/editar/{id}", [PremioController::class, "editarPremio"])->name("editar-premio");
-Route::get("/gestion-premios/eliminar/{id}", [PremioController::class, "eliminarPremio"])->name("eliminar-premio");
-
+Route::post("/gestion-premios/editar/{id}", [PremioController::class, "editarPremioPost"])->name("editar-premio-post");
+Route::match(['GET', 'POST'], '/gestion-premios/eliminar/{id}', [PremioController::class, "eliminarPremio"])->name("eliminar-premio");
 
 
 // Colaborador

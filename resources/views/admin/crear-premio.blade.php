@@ -12,11 +12,11 @@
     <main id='main-crear-premio'>
         <h2>Crear Premio</h2>
         
-        <form action="{{ route('crear-premio-post') }}" enctype="multipart/form-data" id='form-crear-premio'>
-            @csrf
-            <div class="form-group">
-                <label for="nombre">Título*</label>
-                <input type="text" class="form-control" name="titulo">
+        <form method="POST" action="{{ route('crear-premio-post') }}" enctype="multipart/form-data" id='form-crear-premio'>
+        @csrf    
+        <div class="form-group">
+                <label for="titulo">Título*</label>
+                <input type="text" class="form-control" name="titulo" required>
             </div>
             <!-- fecha -->
             <div class="form-group">
@@ -25,7 +25,7 @@
             </div>  
             <div class="form-group">
                 <label for="descripcion">Descripción*</label>
-                <textarea class="form-control" name="descripcion" rows="3"></textarea>
+                <textarea class="form-control" name="descripcion" rows="3" required></textarea>
             </div>
             <!-- url -->
             <div class="form-group">
@@ -37,7 +37,7 @@
                 <input type="file" class="form-control-file" name="imagen">
             </div>
 
-            <button type="submit" class="btn btn-primary">Crear</button>
+            <button type="submit" class="btn btn-primary" required>Crear</button>
         </form>
             
 
