@@ -4,35 +4,26 @@
           <span class="navbar-toggler-icon"></span>
         </button>
 
-        <div class="collapse navbar-collapse justify-content-md-center" id="navbarsExample10">
+        <div class="collapse navbar-collapse" id="navbarsExample10">
           <ul class="navbar-nav">
            
         <li class="{{ Request::is('/') ? 'active' : '' }}">
             <a href="{{ URL::to('/') }}">Inicio</a>
         </li>
 
-        @auth
-            @if (session('perfil') == 'admin')
-                <li class="{{ Route::is('gestion-videos*') ? 'active' : '' }}">
-                    <a href="{{ route('gestion-videos') }}">Gestión de vídeos</a>
-                </li>
-                <li class="{{ Route::is('gestion-premios*') ? 'active' : '' }}">
-                    <a href="{{ route('gestion-premios') }}">Gestión de premios</a>
-                </li>
-            @endif
-        @endauth
+       
 
         <li class="{{ Route::is('quienes-somos') ? 'active' : '' }}">
             <a href="{{ route('quienes-somos') }}">Quiénes somos</a>
         </li>
 
         <li class="{{ Route::is('https://jovenesconinvestigadores.wordpress.com/') ? 'active' : '' }}">
-            <a href="https://jovenesconinvestigadores.wordpress.com/">Jóvenes
+            <a href="https://jovenesconinvestigadores.wordpress.com/" target="_blank">Jóvenes
                 con Investigadores</a>
         </li>
 
         <li class="{{ Route::is('mentorizacion') ? 'active' : '' }}">
-            <a href="{{ route('mentorizacion') }}">Mentorizacion</a>
+            <a href="{{ route('mentorizacion') }}">Mentorización</a>
         </li>
 
         <li class="{{ Route::is('proyectos-intercentros') ? 'active' : '' }}">
@@ -43,37 +34,19 @@
             <a href="{{ route('panel-colaboradores') }}">Panel de colaboradores</a>
         </li>
 
-        @auth
-            @if (session('perfil') == 'admin')
-                <li class="{{ Route::is('gestion-colaboradores') ? 'active' : '' }}">
-                    <a href="{{ route('gestion-colaboradores') }}">Gestión de colaboradores</a>
-                </li>
-            @endif
-        @endauth
-
-        <li class="{{ Route::is('eventos') ? 'active' : '' }}">
-            <a href="{{ route('eventos') }}">Eventos</a>
-        </li>
+    
 
         <li class="{{ Route::is('revistas') ? 'active' : '' }}">
             <a href="{{ route('revistas') }}">Revistas</a>
         </li>
 
-        @if (session('perfil') == 'admin')
-            <li class="{{ Route::is('gestion-videos*') ? 'active' : '' }}">
-                <a href="{{ route('gestion-videos') }}">Gestión de revistas</a>
-            </li>
-        @endif
+       
 
         <li class="{{ Request::url() === 'https://profundizaiesmartinrivero.blogspot.com/' ? 'active' : '' }}">
             <a href="https://profundizaiesmartinrivero.blogspot.com/">Blog</a>
         </li>
 
-        @if (session('perfil') == 'admin')
-            <li class="{{ Route::is('gestion-usuarios*') ? 'active' : '' }}">
-                <a href="{{ route('gestion-usuarios') }}">Gestión de usuarios</a>
-            </li>
-        @endif
+      
           </ul>
         </div>
       </div>

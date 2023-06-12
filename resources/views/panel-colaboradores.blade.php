@@ -1,5 +1,7 @@
 @extends('layouts.plantilla')
 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css">
+
 
 @section('title', 'Panel de Colaboradores')
 
@@ -11,14 +13,6 @@
     text-align: center;
 }
 
-.team-boxed {
-    color: #313437;
-    background-color: #eef4f7;
-}
-
-.team-boxed p {
-    color: #7d8285;
-}
 
 .team-boxed h2 {
     font-weight: bold;
@@ -43,10 +37,6 @@
 
 .team-boxed .intro p {
     margin-bottom: 0;
-}
-
-.team-boxed .people {
-    padding: 50px 60px;
 }
 
 .team-boxed .item {
@@ -81,8 +71,10 @@
     margin-bottom: 20px;
 }
 
-.team-boxed .item img {
+.box img {
     max-width: 160px;
+    height: 160px;
+    object-fit: cover;
 }
 
 .team-boxed .social {
@@ -102,127 +94,88 @@
 }
 </style>
 <main id='main-panel-colaboradores'>
-    @php
-    $embajadores = App\Models\User::where('id_colaborador', 2)->get();
-    $mentores = App\Models\User::where('id_colaborador', 3)->get();
-    $instituto = App\Models\User::where('id_colaborador', 4)->get();
 
-    @endphp
-
-
-
-    <h2>Panel de Colaboradores</h2>
-    <h3>Embajadores</h3>
-
-    <h3>Mentores</h3>
-
-    <div id="myCarousel" class="carousel slide myCarousel" data-bs-ride="carousel" >
-        <div class="carousel-inner">
-            @php
-            $totalMentores = count($mentores);
-            $slides = ceil($totalMentores / 3);
-            $currentSlide = 0;
-            @endphp
-
-            @for ($i = 0; $i < $slides; $i++) <div class="carousel-item {{ $i === 0 ? 'active' : '' }}">
-                <div class="team-boxed">
-                    <div class="container">
-                        <div class="row people">
-                            @php
-                            $startIndex = $currentSlide * 3;
-                            $endIndex = min(($currentSlide + 1) * 3, $totalMentores);
-                            $count = 0;
-
-                            for ($j = $startIndex; $j < $endIndex; $j++) { $mentor=$mentores[$j]; @endphp <div
-                                class="col-md-6 col-lg-4 item">
-                                <div class="box">
-                                    <img class="rounded-circle card-img-top"
-                                        src="https://res.cloudinary.com/dxfq3iotg/image/upload/v1568709978/BBBootstrap/2.jpg">
-                                    <h3 class="name">{{ $mentor->nombre }}</h3>
-                                    <p class="title">Mentor</p>
-                                    <p class="description">Aenean tortor est, vulputate quis leo in, vehicula rhoncus
-                                        lacus. Praesent aliquam in tellus eu gravida. Aliquam varius finibus est, et
-                                        interdum justo suscipit id. Etiam dictum feugiat tellus, a semper massa.</p>
-                                    <div class="social">
-                                        <a href="#"><i class="fa fa-facebook-official"></i></a>
-                                        <a href="#"><i class="fa fa-twitter"></i></a>
-                                        <a href="#"><i class="fa fa-instagram"></i></a>
-                                    </div>
-                                </div>
-                        </div>
-
-                        @php
-                        $count++;
-                        }
-
-                        // Si la diapositiva actual no tiene suficientes elementos, agregar elementos del principio
-                        if ($count < 3) { $remaining=3 - $count; for ($k=0; $k < $remaining; $k++) {
-                            $mentor=$mentores[$k]; @endphp <div class="col-md-6 col-lg-4 item">
-                            <div class="box">
-                                <img class="rounded-circle card-img-top"
-                                    src="https://res.cloudinary.com/dxfq3iotg/image/upload/v1568709978/BBBootstrap/2.jpg">
-                                <h3 class="name">{{ $mentor->nombre }}</h3>
-                                <p class="title">Mentor</p>
-                                <p class="description">Aenean tortor est, vulputate quis leo in, vehicula rhoncus
-                                    lacus. Praesent aliquam in tellus eu gravida. Aliquam varius finibus est, et
-                                    interdum justo suscipit id. Etiam dictum feugiat tellus, a semper massa.</p>
-                                <div class="social">
-                                    <a href="#"><i class="fa fa-facebook-official"></i></a>
-                                    <a href="#"><i class="fa fa-twitter"></i></a>
-                                    <a href="#"><i class="fa fa-instagram"></i></a>
-                                </div>
-                            </div>
-                    </div>
-
-                    @php
-                    }
-                    }
-                    $currentSlide++;
-                    @endphp
-
+    <h4 class="subtitulo mt-5">Embajadores</h4>
+    <div class="carrusel-colaboradores">
+        @foreach ($embajadores as $embajador)
+        <div class="team-boxed">
+            <div class="box">
+                <img class="rounded-circle card-img-top" src=" {{ asset('img/usuarios/' . $embajador->imagen) }}"
+                    alt="Foto de perfil">
+                <h3 class="name">{{ $embajador->nombre }}</h3>
+                <p class="title">Embajador</p>
+                <p class="description">{{ $embajador->descripcion }}</p>
+                <div class="social">
+                {!! !empty($embajador->facebook) ? "<a href='$embajador->facebook'><i class='fa-brands fa-facebook'></i></a>" : "" !!}
+                {!! !empty($embajador->instagram) ? "<a href='$embajador->instagram'><i class='fa-brands fa-instagram'></i></a>" : "" !!}
+                {!! !empty($embajador->twitter) ? "<a href='$embajador->twitter'><i class='fa-brands fa-twitter'></i></a>" : "" !!}
                 </div>
+            </div>
         </div>
-    </div>
-    </div>
-    @endfor
-
-    </div>
-    <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
-    </button>
+        @endforeach
     </div>
 
+    <h4 class="subtitulo mt-5">Mentores</h4>
+    <div class="carrusel-colaboradores">
+        @foreach ($mentores as $mentor)
+        <div class="team-boxed">
+            <div class="box">
+                <img class="rounded-circle card-img-top" src=" {{ asset('img/usuarios/' . $mentor->imagen) }}"
+                    alt="Foto de perfil">
+                <h3 class="name">{{ $mentor->nombre }}</h3>
+                <p class="title">Mentor</p>
+                <p class="description">{{ $mentor->descripcion }}</p>
+                <div class="social">
+                {!! !empty($mentor->facebook) ? "<a href='$mentor->facebook'><i class='fa-brands fa-facebook'></i></a>" : "" !!}
+                {!! !empty($mentor->instagram) ? "<a href='$mentor->instagram'><i class='fa-brands fa-instagram'></i></a>" : "" !!}
+                {!! !empty($mentor->twitter) ? "<a href='$mentor->twitter'><i class='fa-brands fa-twitter'></i></a>" : "" !!}
+                </div>
+            </div>
+        </div>
+        @endforeach
+    </div>
 
+    <h4 class="subtitulo mt-5">Institutos</h4>
+    <div class="carrusel-colaboradores">
+        @foreach ($institutos as $instituto)
+        <div class="team-boxed">
+            <div class="box">
+                <img class="rounded-circle card-img-top" src=" {{ asset('img/entidades/' . $instituto->imagen) }}"
+                    alt="Foto de perfil">
+                <h3 class="name">{{ $instituto->nombre }}</h3>
+                <p class="title">Instituto</p>
+                <p class="description">{{ $instituto->descripcion }}</p>
+                <div class="social">
+                    {!! !empty($instituto->url) ? "<a href='$instituto->url'>{{$instituto->url}}</a>" : "" !!}
+                </div>
+            </div>
+        </div>
+        @endforeach
+    </div>
+</main>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+<script>
+$(document).ready(function() {
+    $(".carrusel-colaboradores").slick({
+        slidesToShow: 3,
+        slidesToScroll: 1,
+        autoplay: true,
+        autoplaySpeed: 1000, // Cambia el valor a 3000 para que avance cada 3 segundos
+        dots: true,
+        arrows: true,
+        afterChange: function(currentSlide) {
+            let totalSlides = $carruselColaboradores.slick('getSlick').slideCount;
+            if (currentSlide === totalSlides - 1) {
+                $carruselColaboradores.slick('slickGoTo', 0);
+        }
+        }
+    });
 
-
-    {{-- @foreach ($colaboradores as $colaborador)
-            @if ($colaborador->tipoColaborador == 'Mentor')
-                @php
-                    $mentores = App\Models\Colaborador::where('tipoColaborador', 'Mentor')->get();
-                @endphp
-
-
-                @foreach ($mentores as $mentor)
-                    <div class="card">
-                        <div class="media media-2x1 gd-primary">
-                            <img class="profile-image"
-                                src="https://res.cloudinary.com/dxfq3iotg/image/upload/v1568709978/BBBootstrap/2.jpg"
-                                width="15%">
-                        </div>
-                        <div class="card-body">
-                            <h5 class="card-title">Delbert Simonas</h5>
-                            <p class="card-text">"Online reviews can make or break a customer's decision to make a purchase.
-                                Read about these customer review on site"</p>
-                        </div>
-                    </div>
-                @endforeach
-            @endif
-        @endforeach --}}
+    $('.slick-next.slick-arrow').text('');
+    $('.slick-prev.slick-arrow').text('');
+});
+</script>
 
 </main>
 

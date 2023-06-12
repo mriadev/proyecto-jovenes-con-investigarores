@@ -10,7 +10,7 @@
       rel="stylesheet"
       href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
     />
-    @vite(['resources/scss/app.scss', 'resources/js/app.js', 'resources/js/carrusel.js', 'resources/js/gestionColaboradores.js', 'resources/js/gestionPremios.js'])
+    @vite(['resources/scss/app.scss', 'resources/js/app.js', 'resources/js/mentorizacion.js', 'resources/js/gestionColaboradores.js', 'resources/js/gestionPremios.js'])
 
     <title>@yield('title')</title>
 </head>

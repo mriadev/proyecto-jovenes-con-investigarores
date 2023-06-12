@@ -14,6 +14,7 @@ class MentorController extends Controller
 
     public function registrarMentor(Request $request){
 
+        dd($request->input('nombre'));
         $data = array(
             'entidad' => $request->input('entidad'),
             'nombre' => $request->input('nombre'),
@@ -32,7 +33,7 @@ class MentorController extends Controller
        try {
        Mail::send('emails.mentores-inscripcion', $data, function($message) use ($data){
         $message->from($data['email']);
-        $message->to('maria14998@gmail.com', 'María')
+        $message->to($data['email'], $data['nombre'])
         ->subject('Inscripción como mentor');
         });
         } catch (\Swift_TransportException $e) {

@@ -15,15 +15,11 @@ use App\Models\Premio;
 
 // Session
 
-session(['videos' => Video::all()]);
+// if (!session()->has('perfil')){
+//     session(['perfil' => 'invitado']);
+//     session(['showLoginButton' => true]);
+// }
 
-//sacar url de todos los videos
-
-
-if (!session()->has('perfil')){
-    session(['perfil' => 'invitado']);
-    session(['showLoginButton' => true]);
-}
 
 Route::get("/", [InicioController::class, "index"])->name("index");
 
@@ -39,6 +35,7 @@ Route::get("/gestion-usuarios", [UsuarioController::class, "index"])->name("gest
 Route::get("/quienes-somos", [UsuarioController::class, "quienesSomos"])->name("quienes-somos");
 Route::post("/quienes-somos", [UsuarioController::class, "quienesSomosPost"])->name("quienes-somos-post");
 Route::get("/mentorizacion", [UsuarioController::class, "mentorizacion"])->name("mentorizacion");
+Route::post("/mentorizacion", [UsuarioController::class, "mentorizacionPost"])->name("mentorizacion-post");
 Route::get("/proyectos-intercentros", [UsuarioController::class, "proyectosIntercentros"])->name("proyectos-intercentros");
 Route::get("/eventos", [UsuarioController::class, "eventos"])->name("eventos");
 Route::get("/revistas", [UsuarioController::class, "revistas"])->name("revistas");
@@ -59,7 +56,8 @@ Route::get("/gestion-premios/quitar-destacado/{id}", [PremioController::class, "
 Route::get("/gestion-premios/editar/{id}", [PremioController::class, "editarPremio"])->name("editar-premio");
 Route::post("/gestion-premios/editar/{id}", [PremioController::class, "editarPremioPost"])->name("editar-premio-post");
 Route::match(['GET', 'POST'], '/gestion-premios/eliminar/{id}', [PremioController::class, "eliminarPremio"])->name("eliminar-premio");
-
+//Premios virginia
+Route::get("/mostrar-premios", [PremioController::class, "mostrarPremios"])->name("mostrar-premios");
 
 // Colaborador
 Route::get("/gestion-colaboradores", [UsuarioController::class, "buscarUsuarioPost"])->name("buscar-usuario");
@@ -71,8 +69,8 @@ Route::match(['GET', 'POST'], '/crear-colaborador/{id}/{tipoColaborador}', [Cola
 Route::match(['GET', 'POST'], '/eliminar-colaborador/{id}', [ColaboradorController::class, 'eliminarColaboradorPost'])->name('eliminar-colaborador-post');
 
 // Mentor
-Route::get("/mentorizacion", [MentorController::class, "mentorizacion"])->name("mentorizacion");
-Route::post("/mentorizacion", [MentorController::class, "registrarMentor"])->name("registrar-mentor");
+// Route::get("/mentorizacion", [MentorController::class, "mentorizacion"])->name("mentorizacion");
+// Route::post("/mentorizacion", [MentorController::class, "registrarMentor"])->name("registrar-mentor");
 
 //Ajax
 Route::get("/obtener-usuarios-ajax", [UsuarioController::class, "obtenerUsuariosAjax"])->name("obtener-usuarios-ajax");

@@ -33,10 +33,10 @@ class AuthController extends Controller
             $perfil_id = DB::table('users')->where('email', $request->email)->value('perfil_id');
             $perfil = DB::table('perfiles')->where('id', $perfil_id)->value('perfil');
             session(['perfil' => $perfil]);
-            return redirect('/gestion-usuarios')->with('success', 'Login successfully.');
+            return redirect('/gestion-usuarios')->with('success', 'Logueado correctamente.');
         }
 
-        return back()->with('error', 'Wrong credentials.');
+        return back()->with('error', 'Las credenciales no son correctas.');
     }
 
     public function register()

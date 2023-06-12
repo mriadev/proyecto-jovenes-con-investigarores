@@ -8,10 +8,9 @@
 </head>
 <body>
 <h1>Inscripción como mentor</h1>
-  <p>Has recibido un nuevo mensaje para dat de alta un mentor:</p>
+  <p>Has recibido un nuevo mensaje para dar de alta un mentor:</p>
     <p>Estos son los datos del solicitante:</p>
   <ul>
-    <li>Entidad: {{ $entidad }}</li>
     <li>Nombre: {{ $nombre }}</li>
     <li>Email: {{ $email }}</li>
     <li>Teléfono: {{ $tel }}</li>
